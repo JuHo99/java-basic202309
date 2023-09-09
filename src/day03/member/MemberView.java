@@ -27,7 +27,8 @@ public class MemberView {
         System.out.println("* 3. 전체회원 정보 조회하기");
         System.out.println("* 4. 회원 정보 수정하기");
         System.out.println("* 5. 회원 정보 삭제하기");
-        System.out.println("* 6. 프로그램 끝내기");
+        System.out.println("* 6. 회원 정보 복구하기");
+        System.out.println("* 7. 프로그램 끝내기");
         System.out.println("=============================");
     }
 
@@ -64,6 +65,9 @@ public class MemberView {
                     stop();
                     break;
                 case "6":
+                    restoreMamber();
+                    break;
+                case "7":
                     String answer = input("# 정말로 종료합니까? [y/n] : ");
                     if (answer.toLowerCase().charAt(0) == 'y') {
                         System.out.println("# 프로그램을 종료합니다.");
@@ -78,14 +82,33 @@ public class MemberView {
         }
     }
 
-    private void deleteMember() {
-        String email = input("# 삭제할 맴버의 이메일 : ");
-        Member member = mr.findMemberByEmail(email);
+    private void restoreMamber() {
+        String email = input("# 복구대상 맴버의 이메일 : ");
+        Member member = mr.findMemberByEmail(email,true);
         if (member != null){
             while (true) {
                 String password = input("# 비밀번호를 입력 : ");
                 if (mr.isMatchPassword(password, member.password)) {
-                    mr.delMember(member.email);
+
+                    System.out.println("# 복구에 성공하셨습니다");
+                    break;
+                } else {
+                    System.out.println("# 비밀번호를 틀렸습니다");
+                }
+            }
+        }else {
+            System.out.println("# 복구대상 맴버를 탐색하지 못했습니다");
+        }
+    }
+
+    private void deleteMember() {
+        String email = input("# 삭제할 맴버의 이메일 : ");
+        Member member = mr.findMemberByEmail(email,false);
+        if (member != null){
+            while (true) {
+                String password = input("# 비밀번호를 입력 : ");
+                if (mr.isMatchPassword(password, member.password)) {
+                    mr.delMember(member.email,false);
                     System.out.println("# 삭제에 성공하셨습니다");
                     break;
                 } else {
@@ -99,7 +122,7 @@ public class MemberView {
 
     private void findMember() {
         String email = input("# 찾는 맴버의 이메일 : ");
-        Member member = mr.findMemberByEmail(email);
+        Member member = mr.findMemberByEmail(email,false);
         if (member != null) {
             System.out.println("Id : " + member.memberId);
             System.out.println("Password : " + member.password);
@@ -117,7 +140,7 @@ public class MemberView {
         //이메일 받기
         String email = input("# 수정 대상의 이메일 : ");
         //수정 대상 탐색
-        Member member = mr.findMemberByEmail(email);
+        Member member = mr.findMemberByEmail(email,false);
         //회원 탐색 됨
         if (member != null) {
             System.out.printf("# %s님의 비밀번호를 변경합니다 \n", member.memberName);

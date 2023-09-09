@@ -9,7 +9,7 @@ public class test {
         System.out.println("flag1 = "+flag1);
 
 
-        Member foundMember = mr.findMemberByEmail(email);
+        Member foundMember = mr.findMemberByEmail(email,false);
         System.out.println("foundMember =" +foundMember);
         // 2번 메뉴를 선택하면 이메일을 입력받아서 일치하는 회원이 발견되면
         // 패스워드를 포함한 모든 정보를 세로로 출력
@@ -24,7 +24,7 @@ public class test {
         //추가 메뉴 번호를 활성화 ( 7. 회원 복구하기)
         // 이메일과 패스워드를 입력 받아서 복구 시키고 기존 회원이 10명 이상일 경우 복구 불가능
 
-        mr.delMember(email);
+        mr.delMember(email,false);
 
         mr.showMembers();
         mr.printRemoveMembers();
