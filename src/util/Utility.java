@@ -10,7 +10,12 @@ public class Utility {
     }
 
     public static String input (String message){
-        System.out.println(message);
+        System.out.print(message);
         return sc.nextLine();
+    }
+
+    public static void stop() {
+        System.out.println("\n======= 엔터를 눌러서 계속…======");
+        sc.nextLine();
     }
 }

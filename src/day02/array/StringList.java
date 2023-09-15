@@ -22,7 +22,7 @@ public class StringList {
         }
         sArr = temp;
     }
-    void push(String newName){
+    public void push(String newName){
         String[] temp = new String[sArr.length +1];
         for (int i = 0; i < sArr.length; i++) {
             temp[i] = sArr[i];
@@ -84,5 +84,9 @@ public class StringList {
 
     void printArray() {
         System.out.println(Arrays.toString(sArr));
+    }
+
+    public String[] getsArr() {
+        return sArr;
     }
 }
