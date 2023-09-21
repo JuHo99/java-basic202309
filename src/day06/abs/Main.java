@@ -17,5 +17,6 @@ public class Main {
         for (Pet pet : pets) {
             pet.eat();
         }
+
     }
 }

@@ -13,4 +13,5 @@ public class Dog extends Pet{
     public void eat(){
         System.out.println("강아지 밥 먹는다");
     }
+
 }
