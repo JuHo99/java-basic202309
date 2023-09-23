@@ -18,6 +18,10 @@ public class ArtistView {
 
     // 메인 실행 기능
     public static void start() {
+
+        //세이브 파일 로드
+        ar.loadFile();
+
         while (true) {
             System.out.println("\n\n****** 음악 관리 프로그램 ******");
             System.out.printf("# 현재 등록된 가수: %d명\n", ar.count());
@@ -76,6 +80,7 @@ public class ArtistView {
                 System.out.printf("\n# %s노래는 이미 저장되어있습니다",songName);
             }
         }
+        ar.autoSave();
     }
 
 }

@@ -1,5 +1,8 @@
 package day08.collection.song;
 
+import day10.io.rw.FilePath;
+
+import java.io.*;
 import java.util.*;
 
 public class ArtistRepository {
@@ -36,11 +39,12 @@ public class ArtistRepository {
 
     /**
      * addNewSong 기존 가수 정보에 노래만 추가하는 기능
+     *
      * @param artistName 사용자의 입력 가수 이름
-     * @param songName 사용자의 입력 노래 이름
+     * @param songName   사용자의 입력 노래 이름
      * @return 곡명이 중복이면 false, 정상 추가시 true
      */
-    public boolean addNewSong(String artistName,String songName){
+    public boolean addNewSong(String artistName, String songName) {
         Artist artist = findArtistByName(artistName);
         boolean flag = artist.getSongList().add(songName);
         return flag;
@@ -56,14 +60,55 @@ public class ArtistRepository {
 
     /**
      * 노래 목록을 찾아서 출력하는 기능
+     *
      * @param artistName
      */
     public void showSongList(String artistName) {
         Artist artist = findArtistByName(artistName);
-        Set<String>songList = artist.getSongList();
-        List<String>songs = new ArrayList<>(songList);
-        for (int i = 0; i <songList.size(); i++) {
-            System.out.printf("* %d. %s\n",i+1,songs.get(i));
+        Set<String> songList = artist.getSongList();
+        List<String> songs = new ArrayList<>(songList);
+        for (int i = 0; i < songList.size(); i++) {
+            System.out.printf("* %d. %s\n", i + 1, songs.get(i));
         }
     }
+
+    //세이브 기능
+    public void autoSave() {
+        //폴더 생성
+        File f = new File(FilePath.path + "/music");
+        if (!f.exists()) f.mkdir();
+
+        try (FileOutputStream fos = new FileOutputStream(FilePath.path + "/music/song.sav")) {
+
+            ObjectOutputStream oos = new ObjectOutputStream(fos);
+
+            oos.writeObject(artistList);
+
+
+        } catch (Exception e) {
+
+        }
+    }
+
+
+    // 로드 기능
+    public void loadFile() {
+
+        // 세이브 파일이 있는지 확인
+        File f = new File(FilePath.path + "/music/song.sav");
+
+        if (f.exists()) { // 해당 세이브파일이 존재하면 로드 진행
+            try (FileInputStream fis = new FileInputStream(FilePath.path + "/music/song.sav")) {
+
+                ObjectInputStream ois = new ObjectInputStream(fis);
+
+                artistList = (Map<String, Artist>) ois.readObject();
+
+            } catch (Exception e) {
+
+            }
+        }
+    }
+
+
 }
